@@ -172,7 +172,7 @@ document.getElementById('table_rank_id').innerHTML =
     formatNumber((totalChanges2 * 100) / treeTax2.totalSpecies) +
     '</th></tr>';
 
-//checks if bot trees are valid for visualization
+//checks if both trees are valid for visualization
 //this treeTax comes from a file selected by the user and is modified by preprocesamiento.js and contChildren.js
 if (!treeTax || !treeTax2) {
     window.location.replace(loadingUrl);
@@ -223,6 +223,8 @@ var initOptions = {
 
 //stores the canvas
 var canvas = null;
+var globalScale = 1;
+var intervalId;
 
 //amuount of the screen the canvas takes
 var totalCanvasWidth = 1.0;
@@ -307,9 +309,11 @@ function setup() {
         windowHeight * totalCanvasHeight
     );
     canvas.parent('sketch-holder');
+    var scale = globalScale;
     var x = 0;
     var y = 0; //(windowHeight*(1.0-totalCanvasHeight));
     canvas.position(x, y);
+    canvas.scale(scale,scale);
 
     //setup optiopns that cannot be initialized before setup
     initOptions['background-color'] = color(255, 180, 40);
@@ -352,7 +356,28 @@ function mouseWheel(event) {
 
 //processing function to detect mouse click, used to turn on a flag
 function mouseClicked() {
+    alert('Called');
+    globalScale++;
+    console.log(globalScale);
     click = true;
+}
+
+function mouseDown() {
+    intervalId = setInterval(function(){
+        globalScale = globalScale + 0.01;
+        draw();
+    }, 50);
+}
+
+function mouseUp(){
+    clearInterval(intervalId);
+    intervalId = setInterval(function(){
+        if (globalScale <= 1){
+            draw(intervalId);
+        }        
+        globalScale = globalScale - 0.01;
+        draw();
+    }, 50);
 }
 
 //processing function to detect window change in size
@@ -389,6 +414,7 @@ function draw() {
     translate(xPointer, -yPointer);
     background(255);
     fill(0);
+    scale(globalScale, globalScale);
 
     //draws based on the current window size
     let base_y = getWindowWidth() / 2 - initOptions.width / 2;
@@ -883,7 +909,7 @@ function drawOnlyText(
 
         //this functions comes from drawMenu.js
         // Pending to delete, code to show a box with data
-        /*if(showInfo){
+     
 			let author = node.a == "" ? "" : `<br>Author:${node.a}`;
 			let date = (node.ad || node.ad == "") ? "" : `  Date:${node.da}`;
 			let synonim = node.equivalent ? "<br>Synonims: "+ node.equivalent.length : "";
@@ -895,12 +921,13 @@ function drawOnlyText(
 			let moves = "----Moves: "+ node.totalMoves;
 			let pv = "<br>----P: "+ node.p;
 			//shows info on screen*/
-        //}
+    
 
         //Bryan, good job!
 
         //if mouse is over and the button clicked
         if (click) {
+            //alert('click test');
             //focus the equivalent node on the other side
             if (node.equivalent && node.equivalent.length > 0) {
                 //iterate equivalent nodes
