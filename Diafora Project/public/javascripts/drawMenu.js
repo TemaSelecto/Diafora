@@ -14,6 +14,8 @@ var interface_variables = {
     move: false,
     bundling: 0.5,
     changedLines: false,
+    zoomIn: false,
+    zoomOut: false
 };
 
 //Used when the buttton exit is cliked
@@ -89,4 +91,12 @@ function onMatrixClicked(value) {
 
 function onExpand() {
     expandAllLevels();
+}
+
+function zoomIn(){
+    interface_variables.zoomIn = true;
+}
+
+function zoomOut(){
+    interface_variables.zoomOut = true;
 }

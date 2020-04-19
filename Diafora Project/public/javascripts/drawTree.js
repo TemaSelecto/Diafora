@@ -1,18 +1,19 @@
 /**
  * TODO
- * -Mover interface code to a diferent module
+ * -Move interface code to a different module
  * -Reset throws console error, not affecting program behaviour in any known way
  * -Check line updating and position updating on expand
- * -Lines not being displayed on infraespecies
+ * -Lines not being displayed on infra-species
  */
-
-//var trree = JSON.parse(sessionStorage.getItem("sessionTree1")).taxonomy;
-//var trree2 = JSON.parse(sessionStorage.getItem("sessionTree2")).taxonomy;
 
 var tree = JSON.parse(sessionStorage.getItem('sessionTree1'));
 var tree2 = JSON.parse(sessionStorage.getItem('sessionTree2'));
 var treeTax = tree.taxonomy;
 var treeTax2 = tree2.taxonomy;
+const controls = {
+    view: {x: 0, y: 0, zoom: 1},
+    viewPos: { prevX: null,  prevY: null,  isDragging: false },
+  }
 
 countChildren(treeTax);
 countChildren(treeTax2);
@@ -182,20 +183,20 @@ if (!treeTax || !treeTax2) {
 var initOptions = {
     defaultSize: 20, //the size of a node
     defaultBarSize: 10, //the size of resume bars
-    indent: 30, //indent betwen each rank of hierarchy
-    increment: 20, //old color changin parameters
+    indent: 30, //indent between each rank of hierarchy
+    increment: 20, //old color changing parameters
     hsbColor: 30,
     hsbIncrement: 2,
-    hsbBrigthnes: 50,
-    hsbbrigthnesIncrement: 7, //end of old color changin parameters
-    use_log_scale: false, //proporcional scale of nodes acording to their content
+    hsbBrightness: 50,
+    hsbbrightnessIncrement: 7, //end of old color changing parameters
+    use_log_scale: false, //proportional scale of nodes according to their content
     use_resume_bars: true,
-    log_increment: 15, //increment of node size by logarigmic level
-    log_scale: 5, //base of the logaritm for scale
+    log_increment: 15, //increment of node size by logarithmic level
+    log_scale: 5, //base of the logarithm for scale
     text_size: 12, //display text size in indented treeTax
     text_hover: 14, //Size of text when hovered
     'circle-padding': 3,
-    hierarchy_distance: 700, //distance betwen hierarchys deprecated
+    hierarchy_distance: 700, //distance between hierarchies deprecated
     width: 350, //indented-treeTax height
     height: 500, //indented-treeTax height
     separation: 100, //Separation betwen indented-treeTax and the size of the screen
@@ -214,7 +215,7 @@ var initOptions = {
     'move-color': '#09D3D3', //color of move nodes used in lines and text
     'equal-color': '#e8e8e8', //color of congruence nodes used in lines and text
     'focus-color': '#50500020', //color of text when a node is clicked
-    atractionForce: 0.01, // force by pixel distance causes movement of nodes
+    attractionForce: 0.01, // force by pixel distance causes movement of nodes
     bundle_radius: 60, //radius in pixel to create bundles
     dirtyNodes: false, //flag marked when a node is moved in the children array of its parent
     lineTransparency: 0.7,
@@ -224,9 +225,10 @@ var initOptions = {
 //stores the canvas
 var canvas = null;
 var globalScale = 1;
+var scaleMultiplier = 0.8;
 var intervalId;
 
-//amuount of the screen the canvas takes
+//amount of the screen the canvas takes
 var totalCanvasWidth = 1.0;
 var totalCanvasHeight = 0.9;
 
@@ -294,28 +296,29 @@ function getWindowWidth() {
     return windowWidth - windowWidth * 0.2;
 }
 
+window.mousePressed = e => Controls.move(controls).mousePressed(e)
+window.mouseDragged = e => Controls.move(controls).mouseDragged(e);
+window.mouseReleased = e => Controls.move(controls).mouseReleased(e)
 //processing function executed before the first draw
 function setup() {
-    console.log({
-        dispLefTree,
-        dispRightTree,
-        targetDispLefTree,
-        targetDispRightTree,
-    });
+
+    
 
     //make canvas size dynamic
     canvas = createCanvas(
         getWindowWidth() * totalCanvasWidth,
-        windowHeight * totalCanvasHeight
+        windowHeight * totalCanvasHeight,
     );
+
     canvas.parent('sketch-holder');
     var scale = globalScale;
     var x = 0;
     var y = 0; //(windowHeight*(1.0-totalCanvasHeight));
     canvas.position(x, y);
     canvas.scale(scale,scale);
+    canvas.mouseWheel(e => Controls.zoom(controls).worldZoom(e))
 
-    //setup optiopns that cannot be initialized before setup
+    //setup options that cannot be initialized before setup
     initOptions['background-color'] = color(255, 180, 40);
     initOptions['stroke-color'] = color(0, 0, 0);
     initOptions['indent-stroke-color'] = color(80, 80, 80);
@@ -325,7 +328,7 @@ function setup() {
     //initOptions["remove-color"] = color(255, 96, 96);
     //initOptions["add-color"] = color(177, 255, 175);
 
-    //Inicialization of first and second treeTax
+    //Initialization of first and second treeTax
     countChildren(treeTax);
     initializeIndentedTree(treeTax, initOptions, 1);
 
@@ -341,7 +344,7 @@ function setup() {
     update_lines(treeTax, false, initOptions);
     sort_and_update_lines();
 
-    //filte system
+    //file system
     var filter = new FilterSystem(treeTax, treeTax2);
 
     console.log(filter.getClosestKey('treu'));
@@ -356,28 +359,7 @@ function mouseWheel(event) {
 
 //processing function to detect mouse click, used to turn on a flag
 function mouseClicked() {
-    alert('Called');
-    globalScale++;
-    console.log(globalScale);
     click = true;
-}
-
-function mouseDown() {
-    intervalId = setInterval(function(){
-        globalScale = globalScale + 0.01;
-        draw();
-    }, 50);
-}
-
-function mouseUp(){
-    clearInterval(intervalId);
-    intervalId = setInterval(function(){
-        if (globalScale <= 1){
-            draw(intervalId);
-        }        
-        globalScale = globalScale - 0.01;
-        draw();
-    }, 50);
 }
 
 //processing function to detect window change in size
@@ -411,10 +393,31 @@ function draw() {
         //console.log("updated lines");
     }
 
-    translate(xPointer, -yPointer);
+    if(interface_variables.zoomIn){
+        interface_variables.zoomIn = false;
+        globalScale /= scaleMultiplier;
+        translate(canvas.width / 2,
+            canvas.height / 2);
+            rect(0, 0, 50, 50);
+    }
+
+    else if(interface_variables.zoomOut){
+        interface_variables.zoomOut= false;
+        globalScale *= scaleMultiplier;
+        translate(canvas.width / 2,
+            canvas.height / 2);
+    }
+    else{
+        translate(xPointer, -yPointer);
+
+    }
+    translate(controls.view.x, controls.view.y);
+  scale(controls.view.zoom)
+
+
     background(255);
     fill(0);
-    scale(globalScale, globalScale);
+    // scale(globalScale, globalScale);
 
     //draws based on the current window size
     let base_y = getWindowWidth() / 2 - initOptions.width / 2;

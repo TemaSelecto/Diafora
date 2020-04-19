@@ -27,10 +27,10 @@
     "eslint-plugin-standard": "^4.0.0",
     "prettier": "^1.18.2"
   },
-  "prettier":{
-	  "trailingComma": "es5",
-	  "tabWidth": 4,
-	  "semi": true,
-	  "singleQuote": true
-	}
+  "prettier": {
+    "trailingComma": "es5",
+    "tabWidth": 4,
+    "semi": true,
+    "singleQuote": true
+  }
 }

@@ -13,6 +13,8 @@
 	<script src = "/javascripts/lineSystem.js" ></script>
 	<script src = "/javascripts/filter.js" ></script>
 	<script src = "/javascripts/ordering.js" ></script>
+	<script src = "/javascripts/controls.js" ></script>
+
 
   </head>
   <body>
@@ -20,6 +22,7 @@
 	<div class="optionSquare">
 		
 		<div class="encircledBox">	
+			<span id="minus" onclick="zoomOut()">-Zoom Out</span>&nbsp;&nbsp;<span id="plus" onclick="zoomIn()">+Zoom In</span>
 		<label>Congruent</label>
 		<label class="switch">
 			<input type="checkbox" name="congruece" onclick="onCongruenceChange()"/>
@@ -123,6 +126,7 @@
 		<!--Function comes from ordering menu script -->
 		<button type=“button” class="buttonsHeader" onclick="onSalir()">Exit</button>
 
+		
 	</div>
 
 	<div class="main_body left top">
