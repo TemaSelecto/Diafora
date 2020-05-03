@@ -23,8 +23,6 @@ let levelList = createRankList(treeTax);
 let levelList2 = createRankList(treeTax2);
 calculate_all_merges(levelList, levelList2);
 
-console.log(treeTax);
-console.log(treeTax2);
 
 document.getElementById('table_taxon_id').innerHTML =
     '<tr><th></th><th>' +
@@ -251,6 +249,9 @@ var click = false; //
 var focusNode = undefined; //Last node selected by the user
 var focusClick = 0;
 
+var offX, offY;
+var border, borderViaLens;
+
 //List of visible nodes for both trees by rank
 //Only nodes on this list will be rendered, they are added or removed when user open or closes a node
 //No all nodes on list are drawn, there is an algorithm that determines wich nodes are on the screen
@@ -296,19 +297,23 @@ function getWindowWidth() {
     return windowWidth - windowWidth * 0.2;
 }
 
-window.mousePressed = e => Controls.move(controls).mousePressed(e)
-window.mouseDragged = e => Controls.move(controls).mouseDragged(e);
-window.mouseReleased = e => Controls.move(controls).mouseReleased(e)
+// window.mousePressed = e => Controls.move(controls).mousePressed(e)
+// window.mouseDragged = e => Controls.move(controls).mouseDragged(e);
+// window.mouseReleased = e => Controls.move(controls).mouseReleased(e)
 //processing function executed before the first draw
 function setup() {
 
-    
-
+    cursor(CROSS);
+    border = color(0);
+    borderViaLens = color(0);
     //make canvas size dynamic
     canvas = createCanvas(
         getWindowWidth() * totalCanvasWidth,
         windowHeight * totalCanvasHeight,
     );
+
+    offX = (getWindowWidth() * totalCanvasWidth)/2;
+    offY = (windowHeight * totalCanvasHeight)/2;
 
     canvas.parent('sketch-holder');
     var scale = globalScale;
@@ -316,7 +321,7 @@ function setup() {
     var y = 0; //(windowHeight*(1.0-totalCanvasHeight));
     canvas.position(x, y);
     canvas.scale(scale,scale);
-    canvas.mouseWheel(e => Controls.zoom(controls).worldZoom(e))
+    // canvas.mouseWheel(e => Controls.zoom(controls).worldZoom(e))
 
     //setup options that cannot be initialized before setup
     initOptions['background-color'] = color(255, 180, 40);
@@ -347,9 +352,7 @@ function setup() {
     //file system
     var filter = new FilterSystem(treeTax, treeTax2);
 
-    console.log(filter.getClosestKey('treu'));
-    console.log(filter.getTopNKeys(3, 'treu'));
-    console.log(filter.queryTaxons(null, 'treu'));
+
 }
 
 //processing function to detect mouse wheel movement used to move the visualization
@@ -412,12 +415,11 @@ function draw() {
 
     }
     translate(controls.view.x, controls.view.y);
-  scale(controls.view.zoom)
 
 
     background(255);
     fill(0);
-    // scale(globalScale, globalScale);
+    scale(globalScale, globalScale);
 
     //draws based on the current window size
     let base_y = getWindowWidth() / 2 - initOptions.width / 2;
@@ -477,6 +479,7 @@ function draw() {
             initOptions.defaultSize * 0.4
         );
     }
+    
 }
 
 //initialize required values on the json treeTax
@@ -511,7 +514,7 @@ function initializeIndentedTree(originalTree, options, growDirection) {
     });
 }
 
-//recaulculates treeTax
+//re-calculates treeTax
 //this functions updates node size and cordinates when needed
 //it's executed asynchronously so it does not interfere with de drawing process
 async function recalculateTree(originalTree, options, callback) {
@@ -552,7 +555,7 @@ function calculateSize(root, options) {
     //iterative iteration of a treeTax
     while (pendingNodes.length > 0) {
         let actual = pendingNodes.pop();
-        //reset in case of being an actualizatioo
+        //reset in case of being an update
         //console.log(pendingNodes);
         if (actual.collapsed) {
             actual.height = getNodeSize(
@@ -565,7 +568,7 @@ function calculateSize(root, options) {
         actual.y = 0;
 
         if (actual !== null && actual !== undefined) {
-            let acumulatedSize = options.defaultSize;
+            let accumulatedSize = options.defaultSize;
 
             //increaseFamilySize(actual,options.defaultSize*2);
             for (childIndex = 0; childIndex < actual.c.length; childIndex++) {
@@ -576,7 +579,7 @@ function calculateSize(root, options) {
                     //childNode.y = acumulatedSize;
 
                     childNode.height += nodeSize;
-                    acumulatedSize += nodeSize;
+                    accumulatedSize += nodeSize;
                     //increaseFamilySize(actual,nodeSize)
                     if (!actual.collapsed) {
                         increaseFamilySize(childNode, nodeSize);
@@ -589,7 +592,7 @@ function calculateSize(root, options) {
     }
 }
 
-//return node logaritimicScale
+//return node logarithmicScale
 //this helper functions defines node size
 function getNodeSize(node, options) {
     //stores how much extra size the node gets
