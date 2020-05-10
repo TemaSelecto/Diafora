@@ -247,6 +247,8 @@ var changed = false; //
 var click = false; //
 
 var focusNode = undefined; //Last node selected by the user
+var hoverNode = undefined; //Current hovered node
+var currentTooltipNode = undefined;
 var focusClick = 0;
 
 var offX, offY;
@@ -423,7 +425,7 @@ function draw() {
 
     //draws based on the current window size
     let base_y = getWindowWidth() / 2 - initOptions.width / 2;
-
+    hoverNode = undefined;
     //Draw function, this draws the indented-treeTax
     optimizedDrawIndentedTree(
         treeTax.visible_lbr,
@@ -439,6 +441,9 @@ function draw() {
         dispRightTree,
         true
     );
+    if(!hoverNode){
+        this.hideTooltip();
+    }
 
     //bundling comes from draw_menu js
     //Draw current visible lines
@@ -743,7 +748,6 @@ function drawHierarchyLevel(taxons, options, pointer, xpos, ypos, isRight) {
     if (isRight) {
         extra_pos = -taxons[0].width;
     }
-
     //draw each node until a taxon is out of the screen
     for (let taxon = initial; taxon < taxons.length; taxon++) {
         let node = taxons[taxon]; //current drawn taxon
@@ -751,8 +755,8 @@ function drawHierarchyLevel(taxons, options, pointer, xpos, ypos, isRight) {
         if (node.f.length <= 0 || !node.f[node.f.length - 1].collapsed) {
             draws++; //increase draws variable for debug
 
-            let node_text_width = node.tw; //size of the text displayed on scren
-            //this depends on the data displkayed on DrawOnlyText and should be changed if that variable is changed
+            let node_text_width = node.tw; //size of the text displayed on screen
+            //this depends on the data displayed on DrawOnlyText and should be changed if that variable is changed
 
             fill(iniColor, 0, iniBrigthnes);
             //drawCutNode(node,yPointer,yPointer+windowHeight*totalCanvasHeight,options,xpos,ypos);
@@ -803,7 +807,7 @@ function drawHierarchyLevel(taxons, options, pointer, xpos, ypos, isRight) {
             if (interface_variables.squares) {
                 drawInside(node, xpos + extra_pos, ypos, options);
             }
-            //chek if indent lines are active or unactive
+            //check if indent lines are active or inactive
             if (interface_variables.lines) {
                 drawIndent(node, xpos, ypos, options, isRight);
             }
@@ -823,7 +827,6 @@ function drawHierarchyLevel(taxons, options, pointer, xpos, ypos, isRight) {
             break;
         }
     }
-
     //console.log("amount of draw calls from render:",draws);
 
     return draws;
@@ -850,6 +853,115 @@ function findHead(list, targetY) {
 
     return middleIndex;
 }
+
+/**
+ * Shows a tooltip with information
+ * OnHover a node
+ * @param {*} evt 
+ * @param {*} text 
+ */
+function showTooltip(evt, node) {
+    if(currentTooltipNode !== node){
+    const data = createTooltipData(node);
+    let tooltip = document.getElementById("tooltip");
+    tooltip.style.display = "block";
+    tooltip.style.left = evt.x - 40 + 'px';
+    tooltip.style.top = evt.y + 10 + 'px';
+    var ctx = $('#tooltipChart');
+    var myDoughnutChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: data,
+        options: {
+            plugins: {
+                labels: {
+                    render: 'value',
+                    fontSize: 10,
+                    fontStyle: 'bold',
+                    fontColor: '#000',
+                    fontFamily: '"Lucida Console", Monaco, monospace',
+                    overlap: false,
+                  }
+            }
+        }
+
+    }); 
+    let tooltipText = document.getElementById("tooltipText");
+    tooltipText.innerHTML = `${node.r}:${node.n}`;
+    currentTooltipNode = node;
+    }
+  }
+  
+  function hideTooltip() {
+     var tooltip = document.getElementById("tooltip");
+     tooltip.style.display = "none";
+     currentTooltipNode = undefined;
+  }
+
+  function createTooltipData(node){
+      return  {
+        labels: [
+            'Splits',
+            'Merges',
+            'Removes',
+            'Insertions',
+            'Renames',
+            'Moves'
+        ],
+        datasets: [{
+            label: '# of Votes',
+            data: [
+                node.totalSplits, 
+                node.totalMerges, 
+                node.totalRemoves,
+                node.totalInsertions,
+                node.totalRenames,
+                node.totalMoves
+            ],
+            backgroundColor: [
+                initOptions["split-color"],
+                initOptions["merge-color"],
+                initOptions["remove-color"],
+                initOptions["add-color"],
+                initOptions["rename-color"],
+                initOptions["move-color"]
+            ],
+            borderColor: [
+                initOptions["split-color"],
+                initOptions["merge-color"],
+                initOptions["remove-color"],
+                initOptions["add-color"],
+                initOptions["rename-color"],
+                initOptions["move-color"]
+            ],
+            borderWidth: 1
+        }]
+    };
+    // return  {
+    //     datasets: [{
+    //         data: [node.totalSplits, 
+    //                node.totalMerges, 
+    //                node.totalRemoves,
+    //                node.totalInsertions,
+    //                node.totalRenames,
+    //                node.totalMoves]
+    //     }],
+    //     backgroundColor: [
+    //         
+    //     ],
+    
+    //     // These labels appear in the legend and in the tooltips when hovering different arcs
+    //     labels: [
+    //         'Splits',
+    //         'Merges',
+    //         'Removes',
+    //         'Insertions',
+    //         'Renames',
+    //         'Moves'
+    //     ]
+    // };
+  }
+
+
 
 //checks if a node is on the screen
 function isOnScreen(node, yScreenPos, screenHeight) {
@@ -927,7 +1039,9 @@ function drawOnlyText(
 			let moves = "----Moves: "+ node.totalMoves;
 			let pv = "<br>----P: "+ node.p;
 			//shows info on screen*/
-    
+            hoverNode = node;
+            showTooltip({x: mouseX + xPointer,
+                         y: mouseY + yPointer}, node);
 
         //Bryan, good job!
 

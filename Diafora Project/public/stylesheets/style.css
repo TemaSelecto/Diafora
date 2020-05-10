@@ -40,13 +40,29 @@ body {
 }
 
 .sunburst{
-  background-color: lightgrey;
-  height: 100px;
-  width: 200px;
-  top: 540px;
-  left: 20px;
-  position: absolute;
+  background-color: transparent;
+  height: 300px;
+  width: 300px;
+  top: 370px;
+  left: 200px;
+  position: fixed;
   z-index: 2;
+}
+
+.treeContext {
+  position: relative;
+  top: 210px;
+  font-size: 11pt;
+}
+
+#tooltip {
+  background: cornsilk;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 5px;
+  width: 300px;
+  height: 320px;
+  z-index: 3;
 }
 
 .sunburst-tooltip{
