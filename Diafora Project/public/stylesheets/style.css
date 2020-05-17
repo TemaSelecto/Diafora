@@ -36,8 +36,6 @@ body {
   position: fixed;
   z-index: 1;
   top: 0;
-  overflow-x: hidden;
-
 }
 
 .sunburst{
@@ -75,13 +73,24 @@ body {
   border: 1px solid black;
   border-radius: 5px;
   padding: 5px;
-  width: 300px;
-  height: 320px;
+  width: 250px;
+  height: 220px;
   z-index: 3;
+}
+#tooltipChart {
+  position: relative;
+  left: 10%;
+  width: 200px !important;
+  height: 200px !important;
 }
 
 .sunburst-tooltip{
  z-index: 2;
+}
+
+.toolTipText {
+  position: relative;
+  padding-top: 12px;
 }
 
 /*Stadistics side*/

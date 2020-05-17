@@ -145,17 +145,15 @@
 		<br>
 		<hr class="separator">
 		<br>
-
+		<div id="tooltip" style="position: absolute; display: none;z-index: 5;">
+			<canvas id="tooltipChart" width="150" height="150"></canvas>
+			<label id="tooltipText" class="toolTipText"></label>
+		</div>
 		<div id="sketch-holder" class="main_body right top">
-			<div id="tooltip" display="none" style="position: absolute; display: none;">
-				<canvas id="tooltipChart" width="150" height="150"></canvas>
-				<label id="tooltipText" class="toolTipText"></label>
-			</div>
+
 
 			<!-- Our sketch will go here! -->
-			<script src = "/javascripts/drawTree.js" ></script>
-
-		
+			<script src = "/javascripts/drawTree.js" ></script>	
 	
 		  </div>
 		<div id="context-holder" class="context-holder">

@@ -869,7 +869,7 @@ function showTooltip(evt, node) {
     const data = createTooltipData(node);
     let tooltip = document.getElementById("tooltip");
     tooltip.style.display = "block";
-    tooltip.style.left = evt.x - 40 + 'px';
+    tooltip.style.left = evt.x + 40 + 'px';
     tooltip.style.top = evt.y + 10 + 'px';
     var ctx = $('#tooltipChart');
     var myDoughnutChart = new Chart(ctx, {
