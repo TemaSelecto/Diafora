@@ -67,30 +67,30 @@ function get_all_lines() {
 }
 
 //c is color
-//rescives a line type and return a color, should be modified if adding new types
+//receives a line type and return a color, should be modified if adding new types
 function setLineColor(line, options) {
-    const tranparency = options.lineTransparency * 255;
+    const transparency = options.lineTransparency * 255;
     let newColor;
     switch (line.c) {
         case 'split':
-            newColor = color(options['split-color']);
+            newColor = p5.instance.color(options['split-color']);
             break;
         case 'merge':
-            newColor = color(options['merge-color']);
+            newColor = p5.instance.color(options['merge-color']);
             break;
         case 'rename':
-            newColor = color(options['rename-color']);
+            newColor = p5.instance.color(options['rename-color']);
             break;
         case 'equal':
-            newColor = color(options['equal-color']);
+            newColor = p5.instance.color(options['equal-color']);
             break;
         case 'move':
             newColor = color(options['move-color']);
             break;
         default:
-            newColor = color(0);
+            newColor = p5.instance.color(0);
     }
-    newColor.setAlpha(tranparency);
+    newColor.setAlpha(transparency);
 
     stroke(newColor);
 }

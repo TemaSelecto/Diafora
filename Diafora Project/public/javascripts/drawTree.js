@@ -204,7 +204,7 @@ var initOptions = {
     'indent-stroke-color': undefined, // color of indent line
     'hover-color': undefined, //hover color for node deprecated
     'hover-color-rect': undefined,
-    'text-color': undefined, //Color of display text
+    'text-color': '#000000', //Color of display text
     'remove-color': '#D50000', //color of removed nodes used in lines and text
     'add-color': '#38B03D', //color of added nodes used in lines and text
     'split-color': '#C700BA', //color of split nodes used in lines and text
@@ -326,12 +326,12 @@ function setup() {
     // canvas.mouseWheel(e => Controls.zoom(controls).worldZoom(e))
 
     //setup options that cannot be initialized before setup
-    initOptions['background-color'] = color(255, 180, 40);
-    initOptions['stroke-color'] = color(0, 0, 0);
-    initOptions['indent-stroke-color'] = color(80, 80, 80);
-    initOptions['hover-color'] = color(120, 80, 87);
-    initOptions['text-color'] = color(0, 0, 0);
-    initOptions['hover-color-rect'] = color(48, 44, 66);
+    initOptions['background-color'] = "rgb(255, 180, 40)";
+    initOptions['stroke-color'] = "rgb(0, 0, 0)";
+    initOptions['indent-stroke-color'] = "rgb(80, 80, 80)";
+    initOptions['hover-color'] = "rgb(120, 80, 87)";
+    initOptions['text-color'] = "rgb(0, 0, 0)";
+    initOptions['hover-color-rect'] = "rgb(48, 44, 66)";
     //initOptions["remove-color"] = color(255, 96, 96);
     //initOptions["add-color"] = color(177, 255, 175);
 
