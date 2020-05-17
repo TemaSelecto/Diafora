@@ -5,8 +5,8 @@
 	<link rel='stylesheet' href='/stylesheets/style.css' />
     <link rel='stylesheet' href='/javascripts/sunburst-chart/sunburst.css' />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	 <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/p5.js"></script>
-	 <script src="http://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/addons/p5.dom.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/p5.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/addons/p5.dom.js"></script>
 	<script src = "/javascripts/drawMenu.js" ></script>
 	<script src = "/javascripts/generic.js" ></script>
 	<script src = "/javascripts/countChildren.js" ></script>
@@ -19,10 +19,9 @@
 	<script src = "/javascripts/sunburst-chart/sunburst-chart.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js"></script>
 	<script src="https://cdn.jsdelivr.net/gh/emn178/chartjs-plugin-labels/src/chartjs-plugin-labels.js"></script>
-
   </head>
-  <body>
 
+  <body>
 	<div class="optionSquare">
 		
 		<div class="encircledBox">	
@@ -129,8 +128,6 @@
 	
 		<!--Function comes from ordering menu script -->
 		<button type=“button” class="buttonsHeader" onclick="onSalir()">Exit</button>
-
-		
 	</div>
 
 	<div class="main_body left top">
@@ -144,40 +141,70 @@
 		<br>
 		<table id="table_rank_id" class="table_stadistic">
 		</table>
+		<br>
+		<hr class="separator">
+		<br>
 
-			<div id="sketch-holder" class="main_body right top">
-				<div id="tooltip" display="none" style="position: absolute; display: none;">
-					<canvas id="tooltipChart" width="150" height="150"></canvas>
-					<label id="tooltipText" class="toolTipText"></label>
-				</div>
-				<!-- Our sketch will go here! -->
-				<script src = "/javascripts/drawTree.js" ></script>
-				<div id="chart" class="sunburst">
-					<label id="treeContext" class="treeContext"></label>
-				</div>
+		<div id="sketch-holder" class="main_body right top">
+			<div id="tooltip" display="none" style="position: absolute; display: none;">
+				<canvas id="tooltipChart" width="150" height="150"></canvas>
+				<label id="tooltipText" class="toolTipText"></label>
+			</div>
+
+			<!-- Our sketch will go here! -->
+			<script src = "/javascripts/drawTree.js" ></script>
+
+			<div id="chart" class="sunburst">
+				<label id="treeContext" class="treeContext"></label>
+			</div>
+			<div id="chart2" class="sunburst2">
+				<label id="treeContext2" class="treeContext2"></label>
+			</div>
 
 			<script>
-					  
-			  const color = d3.scaleOrdinal(d3.schemePaired);
-			  var sunburstChart = Sunburst()
-				.data(treeTax)
-				.size(d => d.c.length || 1)
-				.color(d => color(d.n))
-				.width(180)
-				.height(180)
-				.children(d=> d.c)
-				.label(d=> d.r + ":" + d.n)
-				.tooltipTitle(d=>d.r)
-				.tooltipContent(d=>d.n)
-				.showLabels(false)
-				.minSliceAngle(0.4)
-				.onClick(nodeClick)
-				(document.getElementById('chart'));
+				const color = d3.scaleOrdinal(d3.schemePaired);
+				
+				var sunburstChart = Sunburst()
+					.data(treeTax)
+					.size(d => d.c.length || 1)
+					.color(d => color(d.n))
+					.width(150)
+					.height(150)
+					.children(d=> d.c)
+					.label(d=> d.r + ":" + d.n)
+					.tooltipTitle(d=>d.r)
+					.tooltipContent(d=>d.n)
+					.showLabels(false)
+					.minSliceAngle(0.4)
+					.onClick(nodeClick)
+					(document.getElementById('chart'));
+
+				var sunburstChart2 = Sunburst()
+					.data(treeTax2)
+					.size(d => d.c.length || 1)
+					.color(d => color(d.n))
+					.width(150)
+					.height(150)
+					.children(d=> d.c)
+					.label(d=> d.r + ":" + d.n)
+					.tooltipTitle(d=>d.r)
+					.tooltipContent(d=>d.n)
+					.showLabels(false)
+					.minSliceAngle(0.4)
+					.onClick(nodeClick2)
+					(document.getElementById('chart2'));
 
 				function nodeClick(node){
 					if(node){
 						sunburstChart.focusOnNode(node);
 						this.addLabel();
+					}
+				}
+
+				function nodeClick2(node){
+					if(node){
+						sunburstChart2.focusOnNode(node);
+						this.addLabel2();
 					}
 				}
 			
@@ -189,19 +216,31 @@
 					let currentState = `${node.r}:${node.n}`;
 					p.innerHTML = currentState;
 				}
+
+				function addLabel2(){
+					let p = document.getElementById('treeContext2');
+					p.innerHTML = 'Test';
+					let node = sunburstChart2.focusOnNode()? sunburstChart2.focusOnNode():
+					sunburstChart2.data();
+					let currentState = `${node.r}:${node.n}`;
+					p.innerHTML = currentState;
+				}
+				
 				addLabel();
+				addLabel2();
+
 			</script>
 	
   		</div>
-		    </div>
+	</div>
 			
 
-  		<!-- -->
-		<div class="infoSquare">
-		<p class="infoTitle"></p>
-		<p class="infoBody" ></p>
-		</div>
-  		<!-- -->
+	<!-- -->
+	<div class="infoSquare">
+	<p class="infoTitle"></p>
+	<p class="infoBody" ></p>
+	</div>
+	<!-- -->
 	
 
   </body>

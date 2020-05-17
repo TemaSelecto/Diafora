@@ -42,16 +42,32 @@ body {
 .sunburst{
   background-color: transparent;
   height: 300px;
-  width: 300px;
-  top: 370px;
-  left: 200px;
+  width: 20%;
+  top: 575px;
+  left: 0px;
   position: fixed;
   z-index: 2;
 }
 
 .treeContext {
   position: relative;
-  top: 210px;
+  top: 160px;
+  font-size: 11pt;
+}
+
+.sunburst2 {
+  background-color: transparent;
+  height: 300px;
+  width: 20%;
+  top: 750px;
+  left: 0px;
+  position: fixed;
+  z-index: 2;
+}
+
+.treeContext2 {
+  position: relative;
+  top: 160px;
   font-size: 11pt;
 }
 
@@ -96,7 +112,7 @@ body {
   font-size:8pt;
   color: #222222;
   border-bottom: 1px solid #999999;
-  left-padding: 8px;
+  padding-left: 8px;
   width: 80%;
   margin-left: 10%;
 }
