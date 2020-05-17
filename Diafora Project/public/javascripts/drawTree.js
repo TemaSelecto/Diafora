@@ -304,7 +304,6 @@ function getWindowWidth() {
 // window.mouseReleased = e => Controls.move(controls).mouseReleased(e)
 //processing function executed before the first draw
 function setup() {
-
     cursor(CROSS);
     border = color(0);
     borderViaLens = color(0);
@@ -381,6 +380,9 @@ function windowResized() {
 
 //processing function to draw on canvas, executed at a fixed rate, normaly 30 times per second
 function draw() {
+    if(interface_variables.lens){
+        cursor('zoom-in');
+    }
     //smooth node focusing
     dispLefTree = lerp(dispLefTree, targetDispLefTree, 0.1);
     dispRightTree = lerp(dispRightTree, targetDispRightTree, 0.1);
@@ -861,7 +863,7 @@ function findHead(list, targetY) {
  * @param {*} text 
  */
 function showTooltip(evt, node) {
-    if(currentTooltipNode !== node){
+    if(interface_variables.lens && currentTooltipNode !== node){
     const data = createTooltipData(node);
     let tooltip = document.getElementById("tooltip");
     tooltip.style.display = "block";

@@ -3,7 +3,7 @@
   <head>
     <title><%= title %></title>
 	<link rel='stylesheet' href='/stylesheets/style.css' />
-    <link rel='stylesheet' href='/javascripts/sunburst-chart/sunburst.css' />
+	<link rel='stylesheet' href='/javascripts/sunburst-chart/sunburst.css' />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/p5.js"></script>
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/addons/p5.dom.js"></script>
@@ -105,9 +105,10 @@
 		</div>
 		
 		<div class="encircledBox">
-		<label></label>
+		<label>Lens</label>
 		<label class="switch">
-		<input type="checkbox" name="space"/>
+			<input type="checkbox" name="lens" onclick="onLensChange()"/>
+	    	<span class="slider_switch round lens_slider_switch"></span>
 		</label>
 		</div>
 		

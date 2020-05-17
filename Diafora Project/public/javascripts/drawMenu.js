@@ -15,7 +15,8 @@ var interface_variables = {
     bundling: 0.5,
     changedLines: false,
     zoomIn: false,
-    zoomOut: false
+    zoomOut: false,
+    lens: false,
 };
 
 //Used when the buttton exit is cliked
@@ -55,6 +56,10 @@ function onBarsChange() {
 
 function onAddedChange() {
     interface_variables.added = !interface_variables.added;
+}
+
+function onLensChange() {
+    interface_variables.lens = !interface_variables.lens;
 }
 
 //task activating functionss

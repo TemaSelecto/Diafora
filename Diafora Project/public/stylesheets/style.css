@@ -18,6 +18,7 @@
   --equal-color: #e8e8e8;        
   --focus-color: #50500020;
   --other-color: #4c4c4c;
+  --lens-color: #166e15;
 }
 
 body {
@@ -385,6 +386,10 @@ input:checked + .move_slider_switch {
 
 input:checked + .other_slider_switch {
   background-color: var(--other-color);
+}
+
+input:checked + .lens_slider_switch {
+  background-color: var(--lens-color);
 }
 
 input:focus + .slider_switch {
