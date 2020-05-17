@@ -44,8 +44,7 @@ body {
   background-color: transparent;
   height: 300px;
   width: 20%;
-  top: 575px;
-  left: 0px;
+  left: 25%;
   position: fixed;
   z-index: 2;
 }
@@ -60,8 +59,7 @@ body {
   background-color: transparent;
   height: 300px;
   width: 20%;
-  top: 750px;
-  left: 0px;
+  left: 75%;
   position: fixed;
   z-index: 2;
 }
@@ -400,4 +398,14 @@ input:checked + .slider_switch:before {
   -webkit-transform: translateX(18px);
   -ms-transform: translateX(18px);
   transform: translateX(18px);
+}
+
+.context-holder {
+  position: fixed;
+  top: 70%;
+  left:20%;
+  background-color: #d3d3d3;
+  width: 80%;
+  height: 30%;
+  z-index: 2;
 }

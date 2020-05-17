@@ -863,7 +863,9 @@ function findHead(list, targetY) {
  * @param {*} text 
  */
 function showTooltip(evt, node) {
-    if(interface_variables.lens && currentTooltipNode !== node){
+    if(interface_variables.lens && 
+       currentTooltipNode !== node &&
+       verifyContentChart(node) > 0){
     const data = createTooltipData(node);
     let tooltip = document.getElementById("tooltip");
     tooltip.style.display = "block";
@@ -897,6 +899,15 @@ function showTooltip(evt, node) {
      var tooltip = document.getElementById("tooltip");
      tooltip.style.display = "none";
      currentTooltipNode = undefined;
+  }
+
+  function verifyContentChart(node) {
+      return  node.totalSplits+
+      node.totalMerges+
+      node.totalRemoves+
+      node.totalInsertions+
+      node.totalRenames+
+      node.totalMoves;
   }
 
   function createTooltipData(node){
@@ -938,29 +949,6 @@ function showTooltip(evt, node) {
             borderWidth: 1
         }]
     };
-    // return  {
-    //     datasets: [{
-    //         data: [node.totalSplits, 
-    //                node.totalMerges, 
-    //                node.totalRemoves,
-    //                node.totalInsertions,
-    //                node.totalRenames,
-    //                node.totalMoves]
-    //     }],
-    //     backgroundColor: [
-    //         
-    //     ],
-    
-    //     // These labels appear in the legend and in the tooltips when hovering different arcs
-    //     labels: [
-    //         'Splits',
-    //         'Merges',
-    //         'Removes',
-    //         'Insertions',
-    //         'Renames',
-    //         'Moves'
-    //     ]
-    // };
   }
 
 
