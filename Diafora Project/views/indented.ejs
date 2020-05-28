@@ -200,6 +200,7 @@
 					if(node){
 						sunburstChart.focusOnNode(node);
 						this.addLabel();
+						nodeClick2(node.equivalent[0]);
 					}
 				}
 
@@ -216,6 +217,10 @@
 					let node = sunburstChart.focusOnNode()? sunburstChart.focusOnNode():
 					sunburstChart.data();
 					let currentState = `${node.r}:${node.n}`;
+					node.selected = true;
+					sunburstNode = node;
+					click = true;
+					focusNode= node
 					p.innerHTML = currentState;
 				}
 
@@ -225,6 +230,7 @@
 					let node = sunburstChart2.focusOnNode()? sunburstChart2.focusOnNode():
 					sunburstChart2.data();
 					let currentState = `${node.r}:${node.n}`;
+					node.selected = true;
 					p.innerHTML = currentState;
 				}
 				

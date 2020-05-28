@@ -10,6 +10,7 @@ var tree = JSON.parse(sessionStorage.getItem('sessionTree1'));
 var tree2 = JSON.parse(sessionStorage.getItem('sessionTree2'));
 var treeTax = tree.taxonomy;
 var treeTax2 = tree2.taxonomy;
+var sunburstNode = undefined;
 const controls = {
     view: {x: 0, y: 0, zoom: 1},
     viewPos: { prevX: null,  prevY: null,  isDragging: false },
@@ -1009,7 +1010,7 @@ function drawOnlyText(
             node.y + ypos,
             node_text_width,
             options.defaultSize
-        )
+        ) || isSelectedNodeOnSunBurst(node)
     ) {
         fill(options['hover-color']);
         textSize(options.text_hover);
@@ -1170,6 +1171,10 @@ function drawOnlyText(
     textSize(options.text_size);
 }
 
+function isSelectedNodeOnSunBurst(node){
+    return node === sunburstNode;
+}
+
 //draw the button that can open or close nodes
 function drawExpandButton(
     node,
@@ -1199,6 +1204,7 @@ function drawExpandButton(
             button_size,
             button_size
         )
+        || isSelectedNodeOnSunBurst(node) && click
     ) {
         button_size *= 1.2;
 
