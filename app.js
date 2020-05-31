@@ -62,7 +62,7 @@ module.exports = app;
 
 //cross domain proxy
 // Listen on a specific host via the HOST environment variable
-var host = process.env.HOST || '127.0.0.1';
+var host = process.env.HOST || '127.0.0.11';
 // Listen on a specific port via the PORT environment variable
 var port = process.env.PORT || 5757;
  
