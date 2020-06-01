@@ -1,5 +1,5 @@
-const visualizationUrl = 'http://localhost:3000/indented';
-const downloadUrl = 'http://localhost:3000/download';
+const visualizationUrl = 'http://diafora2.herokuapp.com:3000/indented';
+const downloadUrl = 'http://diafora2.herokuapp.com/download';
 
 function onDownload() {
     window.location.replace(downloadUrl);
@@ -42,7 +42,7 @@ function VerificarDatos() {
             errorText.innerHTML = '';
             //window.location.replace(visualizationUrl);
         } else {
-            errorText.innerHTML = 'Por favor selecione 2 jerarquias';
+            errorText.innerHTML = 'Por favor seleccione 2 jerarquías';
         }
         //console.log("sessionStorage!!!");
     } else {
