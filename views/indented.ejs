@@ -200,8 +200,7 @@
 					if(node){
 						sunburstChart.focusOnNode(node);
 						this.addLabel();
-						sunburstChart2.focusOnNode(node.equivalent[0]);
-						this.addLabel2();
+						nodeClick2(node.equivalent[0]);
 					}
 				}
 
@@ -209,8 +208,6 @@
 					if(node){
 						sunburstChart2.focusOnNode(node);
 						this.addLabel2();
-						sunburstChart.focusOnNode(node).equivalent[0];
-						this.addLabel();
 					}
 				}
 			
@@ -235,10 +232,6 @@
 					let currentState = `${node.r}:${node.n}`;
 					node.selected = true;
 					p.innerHTML = currentState;
-					sunburstNode = node;
-					click = true;
-					focusNode= node
-					isRight = true;
 				}
 				
 				addLabel();
