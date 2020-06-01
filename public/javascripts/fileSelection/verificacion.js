@@ -1,5 +1,5 @@
-const visualizationUrl = '/indented';
-const downloadUrl = '/download';
+const visualizationUrl = 'indented';
+const downloadUrl = 'download';
 
 function onDownload() {
     window.location.replace(downloadUrl);
