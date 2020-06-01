@@ -1,5 +1,5 @@
-const visualizationUrl = 'http://diafora2.herokuapp.com:3000/indented';
-const downloadUrl = 'http://diafora2.herokuapp.com/download';
+const visualizationUrl = 'http://localhost:3000/indented';
+const downloadUrl = 'http://localhost:3000/download';
 
 function onDownload() {
     window.location.replace(downloadUrl);

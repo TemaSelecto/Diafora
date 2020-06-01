@@ -1,6 +1,6 @@
-const loadingUrl = 'http://diafora2.herokuapp.com:3000/';
+const loadingUrl = 'http://localhost:3000/';
 
-//this variables are accesed all over the code to enable or disable features
+//this variables are accessed all over the code to enable or disable features
 var interface_variables = {
     lines: true,
     squares: false,
