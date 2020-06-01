@@ -1,5 +1,5 @@
-const visualizationUrl = 'http://localhost:3000/indented';
-const downloadUrl = 'http://localhost:3000/download';
+const visualizationUrl = 'http://diafora2.herokuapp.com/indented';
+const downloadUrl = 'http://diafora2.herokuapp.com/download';
 
 function onDownload() {
     window.location.replace(downloadUrl);
@@ -60,7 +60,7 @@ function readFile(file, callback) {
     //let content;
     reader.onload = function(evt) {
         //window.sessionStorage.sessionTree1 = evt.target.result;
-        //console.log("loaded");
+        console.log("loaded");
         //console.log(evt.target.result);
         callback(evt.target.result);
     };
