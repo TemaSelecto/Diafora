@@ -1,4 +1,4 @@
-const visualizationUrl = 'http://diafora2.herokuapp.com/indented';
+const visualizationUrl = '/indented';
 const downloadUrl = 'http://diafora2.herokuapp.com/download';
 
 function onDownload() {
@@ -34,7 +34,7 @@ function VerificarDatos() {
                 readFile(file2, function(resultFile2) {
                     sessionStorage.setItem('sessionTree2', resultFile2);
 
-                    window.location.replace(visualizationUrl);
+                    window.location.replace(window.location.href  +  visualizationUrl);
                 });
             });
             //window.sessionStorage.file1 = file1;
