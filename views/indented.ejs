@@ -201,6 +201,7 @@
 						sunburstChart.focusOnNode(node);
 						this.addLabel();
 						nodeClick2(node.equivalent[0]);
+						sunburstSelection = true;
 					}
 				}
 
@@ -208,6 +209,7 @@
 					if(node){
 						sunburstChart2.focusOnNode(node);
 						this.addLabel2();
+						sunburstSelection = true;
 					}
 				}
 			
@@ -220,6 +222,7 @@
 					node.selected = true;
 					sunburstNode = node;
 					click = true;
+					sunburstSelection = true;
 					focusNode= node
 					p.innerHTML = currentState;
 				}
