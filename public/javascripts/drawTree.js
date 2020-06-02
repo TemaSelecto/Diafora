@@ -1010,7 +1010,7 @@ function drawOnlyText(
             node.y + ypos,
             node_text_width,
             options.defaultSize
-        ) || isSelectedNodeOnSunBurst(node)
+        ) 
     ) {
         fill(options['hover-color']);
         textSize(options.text_hover);
