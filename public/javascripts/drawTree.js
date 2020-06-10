@@ -1042,13 +1042,12 @@ function drawOnlyText(
             //alert('click test');
             //focus the equivalent node on the other side
             if (node.equivalent && node.equivalent.length > 0) {
-                sunburstChart.focusOnNode(node);
-                sunburstChart.focusOnNode(node.equivalent[0]);
                 //iterate equivalent nodes
                 if (focusNode === node) focusClick++;
                 else focusClick = 0;
 
                 if (isRight) {
+                    nodeClick2(node);
                     let index = focusClick % node.equivalent.length;
                     targetDispLefTree =
                         node.y - findOpen(node.equivalent[index]).y;
@@ -1056,6 +1055,7 @@ function drawOnlyText(
                     targetDispRightTree = 0;
                     dispRightTree = 0;
                 } else {
+                    nodeClick(node);
                     /* isLeft! */
                     let index = focusClick % node.equivalent.length;
                     targetDispRightTree =
