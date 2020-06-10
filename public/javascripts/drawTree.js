@@ -1042,6 +1042,8 @@ function drawOnlyText(
             //alert('click test');
             //focus the equivalent node on the other side
             if (node.equivalent && node.equivalent.length > 0) {
+                sunburstChart.focusOnNode(node);
+                sunburstChart.focusOnNode(node.equivalent[0]);
                 //iterate equivalent nodes
                 if (focusNode === node) focusClick++;
                 else focusClick = 0;

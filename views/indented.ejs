@@ -166,7 +166,7 @@
 			<script>
 				const color = d3.scaleOrdinal(d3.schemePaired);
 				
-				var sunburstChart = Sunburst()
+				sunburstChart = Sunburst()
 					.data(treeTax)
 					.size(d => d.c.length || 1)
 					.color(d => color(d.n))
@@ -181,7 +181,7 @@
 					.onClick(nodeClick)
 					(document.getElementById('chart'));
 
-				var sunburstChart2 = Sunburst()
+				sunburstChart2 = Sunburst()
 					.data(treeTax2)
 					.size(d => d.c.length || 1)
 					.color(d => color(d.n))
@@ -211,7 +211,7 @@
 						sunburstChart2.focusOnNode(node);
 						this.addLabel2();
 						sunburstSelection = true;
-						sunburstChart.focusOnNode(node).equivalent[0];
+						sunburstChart.focusOnNode(node.equivalent[0]);
 						this.addLabel();
 					}
 				}

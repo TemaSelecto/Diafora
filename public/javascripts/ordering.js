@@ -5,7 +5,8 @@
  *
  *
  */
-
+var sunburstChart;
+var sunburstChart2;
 //from https://codeburst.io/binary-search-in-javascript-a-practical-example-7fda60ce59a1
 //this binary search is customized to be used on taxons of our hierarchy
 //returns an index
