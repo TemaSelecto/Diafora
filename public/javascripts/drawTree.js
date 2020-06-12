@@ -1032,8 +1032,8 @@ function drawOnlyText(
 			let pv = "<br>----P: "+ node.p;
 			//shows info on screen*/
             hoverNode = node;
-            showTooltip({x: mouseX + xPointer,
-                         y: mouseY + yPointer}, node);
+            showTooltip({x: mouseX,
+                         y: mouseY}, node);
 
         //Bryan, good job!
 
